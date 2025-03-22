@@ -1,4 +1,4 @@
-package com.myapartment.apartment_management;
+package com.myapartment.apartment_management.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

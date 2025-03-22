@@ -1,4 +1,4 @@
-package com.myapartment.apartment_management;
+package com.myapartment.apartment_management.controller;
 
 import java.util.List;
 
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.myapartment.apartment_management.entity.FlatOwner;
+import com.myapartment.apartment_management.repository.FlatOwnerRepository;
 
 @RestController
 @RequestMapping("/flat-owner")  // Optional: you can add a base path
