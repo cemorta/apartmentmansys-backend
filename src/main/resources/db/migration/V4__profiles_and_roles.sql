@@ -14,9 +14,6 @@ CREATE TABLE user_roles (
 -- Resident-specific information
 CREATE TABLE resident_profiles (
     user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    flat_id INT NOT NULL REFERENCES flats(id) ON DELETE CASCADE,
-    lease_start_date DATE NOT NULL,
-    lease_end_date DATE,
     emergency_contact VARCHAR(100)
 );
 
@@ -37,13 +34,30 @@ CREATE TABLE staff_profiles (
 -- Flat owner-specific information
 CREATE TABLE flat_owner_profiles (
     user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    flat_ids INT[], -- Array of flat IDs they own
-    purchase_date DATE NOT NULL,
     payment_details JSONB -- Flexible storage for payment information
+);
+
+-- Junction table for flat ownership
+CREATE TABLE flat_ownerships (
+    flat_id INT REFERENCES flats(id) ON DELETE CASCADE,
+    owner_user_id INT REFERENCES flat_owner_profiles(user_id) ON DELETE CASCADE,
+    purchase_date DATE NOT NULL,
+    ownership_percentage DECIMAL(5,2) DEFAULT 100.00, -- Allows for co-ownership
+    PRIMARY KEY (flat_id, owner_user_id)
 );
 
 -- Add owner_id to flats
 ALTER TABLE flats ADD COLUMN owner_user_id INT REFERENCES flat_owner_profiles(user_id) ON DELETE SET NULL;
+
+-- Create flat_occupants junction table
+CREATE TABLE flat_occupants (
+    flat_id INT REFERENCES flats(id) ON DELETE CASCADE,
+    resident_user_id INT REFERENCES resident_profiles(user_id) ON DELETE CASCADE,
+    lease_start_date DATE,
+    lease_end_date DATE,
+    is_primary BOOLEAN DEFAULT false,
+    PRIMARY KEY (flat_id, resident_user_id)
+);
 
 -- Insert the possible roles
 INSERT INTO roles (name) VALUES
