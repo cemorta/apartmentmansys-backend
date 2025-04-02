@@ -1,7 +1,10 @@
 package com.myapartment.apartment_management.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+import com.myapartment.apartment_management.dto.ApartmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +33,16 @@ public class ApartmentController {
     }
 
     @GetMapping
-    public Iterable<Apartment> getAllApartments() {
-        return apartmentRepository.findAll();
+    public List<ApartmentDTO> getAllApartments() {
+        return StreamSupport.stream(apartmentRepository.findAll().spliterator(), false)
+                .map(apartment -> new ApartmentDTO(apartment, true))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Apartment> getApartmentById(@PathVariable Long id) {
+    public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id) {
         return apartmentRepository.findById(id)
-                .map(ResponseEntity::ok)
+                .map(apartment -> ResponseEntity.ok(new ApartmentDTO(apartment, true)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
