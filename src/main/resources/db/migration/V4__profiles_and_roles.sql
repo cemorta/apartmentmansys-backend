@@ -20,8 +20,7 @@ CREATE TABLE resident_profiles (
 -- Admin-specific information
 CREATE TABLE admin_profiles (
     user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    role_level VARCHAR(20) CHECK (role_level IN ('super_admin', 'apartment_manager')) DEFAULT 'apartment_manager',
-    managed_apartments INT[] -- Array of apartment IDs they manage
+    role_level VARCHAR(20) CHECK (role_level IN ('super_admin', 'apartment_manager')) DEFAULT 'apartment_manager'
 );
 
 -- Staff-specific information
@@ -33,8 +32,8 @@ CREATE TABLE staff_profiles (
 
 -- Flat owner-specific information
 CREATE TABLE flat_owner_profiles (
-    user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    payment_details JSONB -- Flexible storage for payment information
+    user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE
+--     payment_details JSONB -- Flexible storage for payment information
 );
 
 -- Junction table for flat ownership
@@ -58,6 +57,18 @@ CREATE TABLE flat_occupants (
     is_primary BOOLEAN DEFAULT false,
     PRIMARY KEY (flat_id, resident_user_id)
 );
+
+-- Apartment Ownerships table (for many-to-many relationship)
+CREATE TABLE apartment_ownerships (
+    admin_user_id INT REFERENCES admin_profiles(user_id) ON DELETE CASCADE,
+    apartment_id INT REFERENCES apartments(id) ON DELETE CASCADE,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_admin_apartment UNIQUE (admin_user_id, apartment_id)
+);
+
 
 -- Insert the possible roles
 INSERT INTO roles (name) VALUES

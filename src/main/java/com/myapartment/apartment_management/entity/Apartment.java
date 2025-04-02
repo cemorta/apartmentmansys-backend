@@ -1,11 +1,8 @@
 package com.myapartment.apartment_management.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Entity representing an apartment in the system.
@@ -26,11 +23,15 @@ public class Apartment {
     
     @Column(name = "floor")
     private Integer floor;
-    
+
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ApartmentOwnership> apartmentOwnerships = new HashSet<>();
+
     // Default constructor
     public Apartment() {
     }
-    
+
+    // TODO: Make all variables optional
     // Constructor with fields
     public Apartment(String buildingName, String unitNumber, Integer floor) {
         this.buildingName = buildingName;
@@ -69,6 +70,26 @@ public class Apartment {
     
     public void setFloor(Integer floor) {
         this.floor = floor;
+    }
+
+    public void addApartmentOwnership(ApartmentOwnership ownership) {
+        apartmentOwnerships.add(ownership);
+        ownership.setApartment(this);
+    }
+
+    // Method to remove apartment ownership
+    public void removeApartmentOwnership(ApartmentOwnership ownership) {
+        apartmentOwnerships.remove(ownership);
+        ownership.setApartment(null);
+    }
+
+    // Getter and setter for the collection
+    public Set<ApartmentOwnership> getApartmentOwnerships() {
+        return apartmentOwnerships;
+    }
+
+    public void setApartmentOwnerships(Set<ApartmentOwnership> apartmentOwnerships) {
+        this.apartmentOwnerships = apartmentOwnerships;
     }
     
     @Override

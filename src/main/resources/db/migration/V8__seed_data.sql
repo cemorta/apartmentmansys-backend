@@ -68,9 +68,17 @@ INSERT INTO resident_profiles (user_id, emergency_contact) VALUES
 (14, 'Peter Martin, +1-555-432-1098'); -- Nancy Martin
 
 -- Insert admin profiles
-INSERT INTO admin_profiles (user_id, role_level, managed_apartments) VALUES
-(1, 'super_admin', '{1,2,3,4,5,6,7,8,9,10}'), -- John Smith manages all
-(2, 'apartment_manager', '{1,2,3,4,5}'); -- Sarah Johnson manages first 5
+INSERT INTO admin_profiles (user_id, role_level) VALUES
+(1, 'super_admin'), -- John Smith manages all
+(2, 'apartment_manager'); -- Sarah Johnson manages first 5
+
+INSERT INTO apartment_ownerships (admin_user_id, apartment_id, start_date, is_active)
+VALUES
+    (2, 1, '2025-01-01 00:00:00', TRUE),
+    (2, 2, '2025-01-01 00:00:00', TRUE),
+    (2, 3, '2025-01-01 00:00:00', TRUE),
+    (2, 4, '2025-01-15 00:00:00', TRUE),
+    (2, 5, '2025-01-15 00:00:00', TRUE);
 
 -- Insert staff profiles
 INSERT INTO staff_profiles (user_id, specialization, hire_date) VALUES
@@ -79,10 +87,10 @@ INSERT INTO staff_profiles (user_id, specialization, hire_date) VALUES
 (5, 'general', '2024-01-02'); -- David Brown
 
 -- Insert flat owner profiles
-INSERT INTO flat_owner_profiles (user_id, payment_details) VALUES
-(6, '{"bank_name": "Chase", "account_type": "checking", "account_number": "XXXX4321"}'), -- Jennifer Davis
-(7, '{"bank_name": "Bank of America", "account_type": "savings", "account_number": "XXXX5432"}'), -- Robert Miller
-(8, '{"bank_name": "Wells Fargo", "account_type": "checking", "account_number": "XXXX6543"}'); -- Lisa Wilson
+INSERT INTO flat_owner_profiles (user_id) VALUES
+(6), -- Jennifer Davis
+(7), -- Robert Miller
+(8); -- Lisa Wilson
 
 -- Insert flats with owner reference
 INSERT INTO flats (apartment_id, flat_number, num_bedrooms, num_bathrooms, owner_user_id, created_at) VALUES
