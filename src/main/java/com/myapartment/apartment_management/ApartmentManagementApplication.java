@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.myapartment.apartment_management.repository.FlatOwnerRepository;
-
 @SpringBootApplication
 public class ApartmentManagementApplication {
 
@@ -18,7 +16,7 @@ public class ApartmentManagementApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(FlatOwnerRepository repository) {
+	public CommandLineRunner demo() {
 		return (args) -> {
 			// // save a few customers
 			// // repository.save(new FlatOwner("Jack", "Bauer"));
