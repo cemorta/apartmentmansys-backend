@@ -27,6 +27,9 @@ public class Apartment {
     @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ApartmentOwnership> apartmentOwnerships = new HashSet<>();
 
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Flat> apartmentFlats = new HashSet<>();
+
     // Default constructor
     public Apartment() {
     }
@@ -91,7 +94,27 @@ public class Apartment {
     public void setApartmentOwnerships(Set<ApartmentOwnership> apartmentOwnerships) {
         this.apartmentOwnerships = apartmentOwnerships;
     }
-    
+
+    public void addApartmentFlat(Flat flat) {
+        apartmentFlats.add(flat);
+        flat.setApartment(this);
+    }
+
+    // Method to remove apartment ownership
+    public void removeApartmentFlat(Flat flat) {
+        apartmentFlats.remove(flat);
+        flat.setApartment(null);
+    }
+
+    // Getter and setter for the collection
+    public Set<Flat> getApartmentFlats() {
+        return apartmentFlats;
+    }
+
+    public void setApartmentFlats(Set<Flat> apartmentFlats) {
+        this.apartmentFlats = apartmentFlats;
+    }
+
     @Override
     public String toString() {
         return "Apartment{" +

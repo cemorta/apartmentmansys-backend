@@ -3,6 +3,7 @@ package com.myapartment.apartment_management.dto;
 import java.util.Set;
 import java.util.stream.Collectors;
 import com.myapartment.apartment_management.entity.Apartment;
+import com.myapartment.apartment_management.entity.Flat;
 
 public class ApartmentDTO {
     private Long id;
@@ -10,13 +11,14 @@ public class ApartmentDTO {
     private String unitNumber;
     private Integer floor;
     private Set<ApartmentOwnershipDTO> ownerships;
+    private Set<FlatDTO> apartmentFlats;
 
     // Default constructor
     public ApartmentDTO() {
     }
 
     // Constructor from entity
-    public ApartmentDTO(Apartment apartment, boolean includeOwnerships) {
+    public ApartmentDTO(Apartment apartment, boolean includeOwnerships, boolean includeFlats) {
         this.id = apartment.getId();
         this.buildingName = apartment.getBuildingName();
         this.unitNumber = apartment.getUnitNumber();
@@ -25,6 +27,12 @@ public class ApartmentDTO {
         if (includeOwnerships && apartment.getApartmentOwnerships() != null) {
             this.ownerships = apartment.getApartmentOwnerships().stream()
                     .map(ownership -> new ApartmentOwnershipDTO(ownership, false))
+                    .collect(Collectors.toSet());
+        }
+
+        if (includeFlats && apartment.getApartmentFlats() != null) {
+            this.apartmentFlats = apartment.getApartmentFlats().stream()
+                    .map(flat -> new FlatDTO(flat, true, false))
                     .collect(Collectors.toSet());
         }
     }
@@ -68,5 +76,13 @@ public class ApartmentDTO {
 
     public void setOwnerships(Set<ApartmentOwnershipDTO> ownerships) {
         this.ownerships = ownerships;
+    }
+
+    public Set<FlatDTO> getApartmentFlats() {
+        return apartmentFlats;
+    }
+
+    public void setApartmentFlats(Set<FlatDTO> apartmentFlats) {
+        this.apartmentFlats = apartmentFlats;
     }
 }

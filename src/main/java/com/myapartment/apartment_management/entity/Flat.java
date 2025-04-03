@@ -18,8 +18,14 @@ public class Flat {
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
 
-    @Column(name = "flat_number", length = 10, unique = true, nullable = false)
+    @Column(name = "flat_number", length = 10, nullable = false)
     private String flatNumber;
+
+    @Column(name = "floor_number", nullable = false)
+    private Integer floorNumber;
+
+    @Column(name = "area", nullable = false)
+    private Integer area;
 
     @Column(name = "num_bedrooms")
     private Integer numBedrooms;
@@ -39,10 +45,12 @@ public class Flat {
     }
 
     // Constructor with fields
-    public Flat(Apartment apartment, String flatNumber, Integer numBedrooms,
+    public Flat(Apartment apartment, String flatNumber, Integer floorNumber, Integer area, Integer numBedrooms,
                 Integer numBathrooms, FlatOwnerProfile owner) {
         this.apartment = apartment;
         this.flatNumber = flatNumber;
+        this.floorNumber = floorNumber;
+        this.area = area;
         this.numBedrooms = numBedrooms;
         this.numBathrooms = numBathrooms;
         this.owner = owner;
@@ -106,16 +114,35 @@ public class Flat {
         this.createdAt = createdAt;
     }
 
+    public Integer getFloorNumber() {
+        return floorNumber;
+    }
+
+    public void setFloorNumber(Integer floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
     @Override
     public String toString() {
         return "Flat{" +
                 "id=" + id +
                 ", apartment=" + (apartment != null ? apartment.getId() : null) +
                 ", flatNumber='" + flatNumber + '\'' +
+                ", floorNumber=" + floorNumber +
+                ", area=" + area +
                 ", numBedrooms=" + numBedrooms +
                 ", numBathrooms=" + numBathrooms +
                 ", owner=" + (owner != null ? owner.getUserId() : null) +
                 ", createdAt=" + createdAt +
                 '}';
     }
+
 }

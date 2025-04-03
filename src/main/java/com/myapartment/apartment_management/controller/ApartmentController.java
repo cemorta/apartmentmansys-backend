@@ -35,14 +35,14 @@ public class ApartmentController {
     @GetMapping
     public List<ApartmentDTO> getAllApartments() {
         return StreamSupport.stream(apartmentRepository.findAll().spliterator(), false)
-                .map(apartment -> new ApartmentDTO(apartment, true))
+                .map(apartment -> new ApartmentDTO(apartment, true, false))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id) {
         return apartmentRepository.findById(id)
-                .map(apartment -> ResponseEntity.ok(new ApartmentDTO(apartment, true)))
+                .map(apartment -> ResponseEntity.ok(new ApartmentDTO(apartment, true, true)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
