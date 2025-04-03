@@ -32,7 +32,7 @@ public class ApartmentDTO {
 
         if (includeFlats && apartment.getApartmentFlats() != null) {
             this.apartmentFlats = apartment.getApartmentFlats().stream()
-                    .map(flat -> new FlatDTO(flat, true, false))
+                    .map(flat -> new FlatDTO(flat, true, false, true))
                     .collect(Collectors.toSet());
         }
     }

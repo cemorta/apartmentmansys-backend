@@ -2,6 +2,8 @@ package com.myapartment.apartment_management.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entity representing a flat within an apartment building.
@@ -36,6 +38,9 @@ public class Flat {
     @ManyToOne
     @JoinColumn(name = "owner_user_id")
     private FlatOwnerProfile owner;
+
+    @OneToMany(mappedBy = "flat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FlatOccupant> flatOccupants = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -145,4 +150,11 @@ public class Flat {
                 '}';
     }
 
+    public Set<FlatOccupant> getFlatOccupants() {
+        return flatOccupants;
+    }
+
+    public void setFlatOccupants(Set<FlatOccupant> flatOccupants) {
+        this.flatOccupants = flatOccupants;
+    }
 }
