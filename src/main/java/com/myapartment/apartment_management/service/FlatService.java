@@ -58,4 +58,12 @@ public class FlatService {
                 flat.getOwner() != null ? flat.getOwner().getUser().getId() : null
         );
     }
+
+    public void deleteFlat(Long id) {
+        flatRepository.deleteById(id);
+    }
+
+    public boolean existsById(Long id) {
+        return flatRepository.existsById(id);
+    }
 }

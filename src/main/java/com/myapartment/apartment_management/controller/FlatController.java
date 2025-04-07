@@ -29,4 +29,14 @@ public class FlatController {
         FlatCreateDTO saved = flatService.createFlat(flatCreateDTO);
         return ResponseEntity.ok(saved);
     }
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteFlat(@PathVariable Long id) {
+        if (!flatService.existsById(id)) {
+            return new ResponseEntity<>("Flat not found with id: " + id, HttpStatus.NOT_FOUND);
+        }
+        
+        flatService.deleteFlat(id);
+        return new ResponseEntity<>("Flat successfully deleted", HttpStatus.OK);
+    }
 }
