@@ -30,7 +30,7 @@ public class FlatController {
         return ResponseEntity.ok(saved);
     }
     
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFlat(@PathVariable Long id) {
         if (!flatService.existsById(id)) {
             return new ResponseEntity<>("Flat not found with id: " + id, HttpStatus.NOT_FOUND);
