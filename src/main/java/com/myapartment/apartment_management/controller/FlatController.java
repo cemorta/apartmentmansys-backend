@@ -8,6 +8,9 @@ import com.myapartment.apartment_management.repository.ApartmentRepository;
 import com.myapartment.apartment_management.repository.FlatRepository;
 import com.myapartment.apartment_management.service.FlatService;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +34,13 @@ public class FlatController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFlat(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteFlat(@PathVariable Long id) {
         if (!flatService.existsById(id)) {
-            return new ResponseEntity<>("Flat not found with id: " + id, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.of("message", "Flat not found with id: " + id), HttpStatus.NOT_FOUND);
         }
-        
+
         flatService.deleteFlat(id);
-        return new ResponseEntity<>("Flat successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "Flat successfully deleted"), HttpStatus.OK);
     }
+
 }
