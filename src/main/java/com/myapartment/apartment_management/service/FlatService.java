@@ -66,4 +66,12 @@ public class FlatService {
     public boolean existsById(Long id) {
         return flatRepository.existsById(id);
     }
+
+    public Flat updateFlat(Flat flat) {
+        return flatRepository.save(flat);
+    }
+    
+    public Flat getFlatById(Long id) {
+        return flatRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Flat not found"));
+    }
 }

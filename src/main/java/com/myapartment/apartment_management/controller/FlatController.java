@@ -43,4 +43,14 @@ public class FlatController {
         return new ResponseEntity<>(Map.of("message", "Flat successfully deleted"), HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Flat> updateFlat(@PathVariable Long id, @RequestBody Flat flat) {
+        if (!flatService.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Flat updatedFlat = flatRepository.save(flat);
+        return new ResponseEntity<>(updatedFlat, HttpStatus.OK);
+    }
+
 }
