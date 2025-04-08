@@ -24,14 +24,14 @@ public class UserController {
     @GetMapping
     public List<UserDTO> getAllUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
-                .map(UserDTO::new)
+                .map(user -> new UserDTO(user, true))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
-                .map(user -> ResponseEntity.ok(new UserDTO(user)))
+                .map(user -> ResponseEntity.ok(new UserDTO(user, true)))
                 .orElse(ResponseEntity.notFound().build());
     }
 

@@ -33,7 +33,7 @@ public class FlatDTO {
         this.numBathrooms = flat.getNumBathrooms();
 
         if (includeOwner && flat.getOwner() != null) {
-            this.owner = new UserDTO(flat.getOwner().getUser());
+            this.owner = new UserDTO(flat.getOwner().getUser(), false);
         }
         if (includeApartment && flat.getApartment() != null) {
             this.apartment = new ApartmentDTO(flat.getApartment(), false, false);

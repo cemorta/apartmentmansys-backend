@@ -24,7 +24,7 @@ public class FlatOccupantDTO {
         if (includeFlat && flatOccupant.getFlat() != null) {
             this.flatDto = new FlatDTO(flatOccupant.getFlat(), false, false, false);
         }
-        this.userDto = new UserDTO(flatOccupant.getResident().getUser());
+        this.userDto = new UserDTO(flatOccupant.getResident().getUser(), false);
         this.leaseStartDate = flatOccupant.getLeaseStartDate();
         this.leaseEndDate = flatOccupant.getLeaseEndDate();
         this.isPrimary = flatOccupant.getIsPrimary();

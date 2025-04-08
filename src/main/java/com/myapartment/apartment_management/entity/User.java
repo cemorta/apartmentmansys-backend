@@ -42,6 +42,18 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ResidentProfile residentProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FlatOwnerProfile flatOwnerProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AdminProfile adminProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private StaffProfile staffProfile;
+
     // Default constructor
     public User() {
     }
@@ -140,5 +152,37 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    public ResidentProfile getResidentProfile() {
+        return residentProfile;
+    }
+
+    public void setResidentProfile(ResidentProfile residentProfile) {
+        this.residentProfile = residentProfile;
+    }
+
+    public FlatOwnerProfile getFlatOwnerProfile() {
+        return flatOwnerProfile;
+    }
+
+    public void setFlatOwnerProfile(FlatOwnerProfile flatOwnerProfile) {
+        this.flatOwnerProfile = flatOwnerProfile;
+    }
+
+    public AdminProfile getAdminProfile() {
+        return adminProfile;
+    }
+
+    public void setAdminProfile(AdminProfile adminProfile) {
+        this.adminProfile = adminProfile;
+    }
+
+    public StaffProfile getStaffProfile() {
+        return staffProfile;
+    }
+
+    public void setStaffProfile(StaffProfile staffProfile) {
+        this.staffProfile = staffProfile;
     }
 }

@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.myapartment.apartment_management.entity.Role;
-import com.myapartment.apartment_management.entity.User;
+import com.myapartment.apartment_management.entity.*;
 
 public class UserDTO {
     private Long id;
@@ -15,19 +14,38 @@ public class UserDTO {
     private String phone;
     private LocalDateTime createdAt;
     private Set<String> roles;
+    private ResidentProfileDTO residentProfile;
+    private FlatOwnerProfileDTO flatOwnerProfile;
+    private AdminProfileDTO adminProfile;
+    private StaffProfileDTO staffProfile;
 
     // Default constructor
     public UserDTO() {
     }
 
     // Constructor from entity
-    public UserDTO(User user) {
+    public UserDTO(User user, boolean getProfileInfo) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.phone = user.getPhone();
         this.createdAt = user.getCreatedAt();
+
+        if(getProfileInfo) {
+            if (user.getResidentProfile() != null) {
+                this.residentProfile = new ResidentProfileDTO(user.getResidentProfile());
+            }
+            if (user.getFlatOwnerProfile() != null) {
+                this.flatOwnerProfile = new FlatOwnerProfileDTO(user.getFlatOwnerProfile());
+            }
+            if (user.getAdminProfile() != null) {
+                this.adminProfile = new AdminProfileDTO(user.getAdminProfile());
+            }
+            if (user.getStaffProfile() != null) {
+                this.staffProfile = new StaffProfileDTO(user.getStaffProfile());
+            }
+        }
 
         // Assuming there's a getRoles method that returns a Set<Role>
         if (user.getRoles() != null) {
@@ -92,5 +110,37 @@ public class UserDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public ResidentProfileDTO getResidentProfile() {
+        return residentProfile;
+    }
+
+    public void setResidentProfile(ResidentProfileDTO residentProfile) {
+        this.residentProfile = residentProfile;
+    }
+
+    public FlatOwnerProfileDTO getFlatOwnerProfile() {
+        return flatOwnerProfile;
+    }
+
+    public void setFlatOwnerProfile(FlatOwnerProfileDTO flatOwnerProfile) {
+        this.flatOwnerProfile = flatOwnerProfile;
+    }
+
+    public AdminProfileDTO getAdminProfile() {
+        return adminProfile;
+    }
+
+    public void setAdminProfile(AdminProfileDTO adminProfile) {
+        this.adminProfile = adminProfile;
+    }
+
+    public StaffProfileDTO getStaffProfile() {
+        return staffProfile;
+    }
+
+    public void setStaffProfile(StaffProfileDTO staffProfile) {
+        this.staffProfile = staffProfile;
     }
 }

@@ -26,7 +26,7 @@ public class ApartmentOwnershipDTO {
         }
 
         if (ownership.getAdminProfile() != null) {
-            this.adminUser = new UserDTO(ownership.getAdminProfile().getUser());
+            this.adminUser = new UserDTO(ownership.getAdminProfile().getUser(), false);
         }
 
         this.startDate = ownership.getStartDate();
