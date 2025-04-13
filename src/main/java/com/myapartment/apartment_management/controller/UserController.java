@@ -3,6 +3,11 @@ package com.myapartment.apartment_management.controller;
 import com.myapartment.apartment_management.dto.UserDTO;
 import com.myapartment.apartment_management.entity.User;
 import com.myapartment.apartment_management.repository.UserRepository;
+import com.myapartment.apartment_management.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +21,11 @@ import java.util.stream.StreamSupport;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    UserController(UserRepository userRepository) {
+    UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -26,6 +33,23 @@ public class UserController {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
                 .map(user -> new UserDTO(user, true))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<UserDTO>> getFilteredUsers(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String profile,
+            @RequestParam(required = false) String role,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        Page<User> userPage = userService.getFilteredUsers(search, profile, role, pageable);
+
+        // Convert Page<User> to Page<UserDTO>
+        Page<UserDTO> userDtoPage = userPage.map(user -> new UserDTO(user, true));
+
+        return ResponseEntity.ok(userDtoPage);
     }
 
     @GetMapping("/{id}")
