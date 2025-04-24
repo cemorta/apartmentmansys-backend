@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
   User findById(long id);
+  User findUserByEmail(String email);
 }
