@@ -74,6 +74,8 @@ public class UserService {
         };
     }
 
+    
+
     private Role mapRoleToField(String roleName) {
         return switch (roleName) {
             case "Apartment Manager" -> roleRepository.findByName("apartment_manager");

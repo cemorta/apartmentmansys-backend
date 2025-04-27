@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -61,7 +62,8 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        user.setId(null); // force Hibernate to treat it as a new record
+        user.setId(null);
+        user.setCreatedAt(LocalDateTime.now()); 
         User saved = userRepository.save(user);
         return ResponseEntity.ok(saved);
     }
