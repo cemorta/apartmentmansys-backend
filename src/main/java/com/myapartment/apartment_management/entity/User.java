@@ -185,4 +185,21 @@ public class User {
     public void setStaffProfile(StaffProfile staffProfile) {
         this.staffProfile = staffProfile;
     }
+
+    // Helper methods to check profiles
+    public boolean isAdmin() {
+        return adminProfile != null;
+    }
+
+    public boolean isResident() {
+        return residentProfile != null;
+    }
+
+    public boolean isFlatOwner() {
+        return flatOwnerProfile != null;
+    }
+
+    public boolean isStaff() {
+        return staffProfile != null;
+    }
 }

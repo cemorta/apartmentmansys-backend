@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,6 +26,11 @@ public class UserService {
 //    public Page<User> getAllUsers(Pageable pageable) {
 //        return userRepository.findAll(pageable);
 //    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
 
     public Page<User> getFilteredUsers(String search, String profile, String role, Pageable pageable) {
         Specification<User> spec = Specification.where(null);

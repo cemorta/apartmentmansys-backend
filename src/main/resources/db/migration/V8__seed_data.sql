@@ -1,25 +1,25 @@
 -- Seed data for apartment management system
 
--- Insert users (mix of admins, residents, staff and owners)
+-- Insert users (mix of admins, residents, staff and owners) The password is: "pass"
 INSERT INTO users (first_name, last_name, email, phone, password_hash, created_at) VALUES
 -- Admins
-('John', 'Smith', 'john.smith@example.com', '+1-551-123-4567', 'pass', '2024-01-05 09:00:00'),
-('Sarah', 'Johnson', 'sarah.johnson@example.com', '+1-525-234-5678', 'pass', '2024-01-10 10:15:00'),
+('John', 'Smith', 'john.smith@example.com', '+1-551-123-4567', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-01-05 09:00:00'),
+('Sarah', 'Johnson', 'sarah.johnson@example.com', '+1-525-234-5678', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-01-10 10:15:00'),
 -- Staff
-('Michael', 'Garcia', 'michael.garcia@example.com', '+1-355-345-6789', 'pass', '2024-01-15 11:30:00'),
-('Emily', 'Williams', 'emily.williams@example.com', '+1-455-456-7890', 'pass', '2024-01-20 12:45:00'),
-('David', 'Brown', 'david.brown@example.com', '+1-555-517-8901', 'pass', '2024-01-25 14:00:00'),
+('Michael', 'Garcia', 'michael.garcia@example.com', '+1-355-345-6789', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-01-15 11:30:00'),
+('Emily', 'Williams', 'emily.williams@example.com', '+1-455-456-7890', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-01-20 12:45:00'),
+('David', 'Brown', 'david.brown@example.com', '+1-555-517-8901', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-01-25 14:00:00'),
 -- Flat Owners
-('Jennifer', 'Davis', 'jennifer.davis@example.com', '+1-135-678-9012', 'pass', '2024-02-01 15:15:00'),
-('Robert', 'Miller', 'robert.miller@example.com', '+1-995-789-0123', 'pass', '2024-02-05 16:30:00'),
-('Lisa', 'Wilson', 'lisa.wilson@example.com', '+1-555-000-1234', 'pass', '2024-02-10 17:45:00'),
+('Jennifer', 'Davis', 'jennifer.davis@example.com', '+1-135-678-9012', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-01 15:15:00'),
+('Robert', 'Miller', 'robert.miller@example.com', '+1-995-789-0123', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-05 16:30:00'),
+('Lisa', 'Wilson', 'lisa.wilson@example.com', '+1-555-000-1234', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-10 17:45:00'),
 -- Residents
-('James', 'Taylor', 'james.taylor@example.com', '+1-595-901-2345', 'pass', '2024-02-15 09:00:00'),
-('Mary', 'Anderson', 'mary.anderson@example.com', '+1-255-012-3456', 'pass', '2024-02-20 10:15:00'),
-('Thomas', 'Jackson', 'thomas.jackson@example.com', '+1-455-123-4567', 'pass', '2024-02-25 11:30:00'),
-('Patricia', 'White', 'patricia.white@example.com', '+1-655-234-5678', 'pass', '2024-03-01 12:45:00'),
-('Daniel', 'Harris', 'daniel.harris@example.com', '+1-575-345-6789', 'pass', '2024-03-05 14:00:00'),
-('Nancy', 'Martin', 'nancy.martin@example.com', '+1-595-456-7890', 'pass', '2024-03-10 15:15:00');
+('James', 'Taylor', 'james.taylor@example.com', '+1-595-901-2345', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-15 09:00:00'),
+('Mary', 'Anderson', 'mary.anderson@example.com', '+1-255-012-3456', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-20 10:15:00'),
+('Thomas', 'Jackson', 'thomas.jackson@example.com', '+1-455-123-4567', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-02-25 11:30:00'),
+('Patricia', 'White', 'patricia.white@example.com', '+1-655-234-5678', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-03-01 12:45:00'),
+('Daniel', 'Harris', 'daniel.harris@example.com', '+1-575-345-6789', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-03-05 14:00:00'),
+('Nancy', 'Martin', 'nancy.martin@example.com', '+1-595-456-7890', '$2a$10$TrOy6D8XaJm7V4nv7LuEKOEHuJ3NhSNr/DgspjXp0bHZeaE6r8uU6', '2024-03-10 15:15:00');
 
 -- Insert apartments
 INSERT INTO apartments (building_name, unit_number, floor) VALUES
