@@ -1,0 +1,852 @@
+openapi: "3.1.0"
+info:
+  title: "apartmentmansys_backend API"
+  description: "apartmentmansys_backend API"
+  version: "1.0.0"
+servers:
+  - url: "https://apartmentmansys_backend"
+paths:
+  /api/flats/{id}:
+    put:
+      summary: "PUT api/flats/{id}"
+      operationId: "updateFlat"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flat"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Flat"
+    delete:
+      summary: "DELETE api/flats/{id}"
+      operationId: "deleteFlat"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /api/flats/create:
+    post:
+      summary: "POST api/flats/create"
+      operationId: "createFlat"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlatCreateDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/FlatCreateDTO"
+  /api/users/create:
+    post:
+      summary: "POST api/users/create"
+      operationId: "createUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/User"
+  /api/users/{id}:
+    delete:
+      summary: "DELETE api/users/{id}"
+      operationId: "deleteUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+    get:
+      summary: "GET api/users/{id}"
+      operationId: "getUserById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+  /api/users:
+    get:
+      summary: "GET api/users"
+      operationId: "getAllUsers"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/UserDTO"
+  /api/users/filter:
+    get:
+      summary: "GET api/users/filter"
+      operationId: "getFilteredUsers"
+      parameters:
+        - name: "search"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "profile"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "role"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "page"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "0"
+        - name: "size"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "10"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+  /api/apartments/create:
+    post:
+      summary: "POST api/apartments/create"
+      operationId: "addApartment"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Apartment"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Apartment"
+  /api/apartments/{id}:
+    delete:
+      summary: "DELETE api/apartments/{id}"
+      operationId: "deleteApartment"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+    get:
+      summary: "GET api/apartments/{id}"
+      operationId: "getApartmentById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ApartmentDTO"
+  /api/apartments:
+    get:
+      summary: "GET api/apartments"
+      operationId: "getAllApartments"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/ApartmentDTO"
+  /api/auth/login:
+    post:
+      summary: "POST api/auth/login"
+      operationId: "login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/auth/admin-login:
+    post:
+      summary: "POST api/auth/admin-login"
+      operationId: "adminLogin"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/maintenance/{id}:
+    put:
+      summary: "PUT api/maintenance/{id}"
+      operationId: "updateMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMaintenanceRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+    delete:
+      summary: "DELETE api/maintenance/{id}"
+      operationId: "deleteMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+    get:
+      summary: "GET api/maintenance/{id}"
+      operationId: "getMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+  /api/maintenance:
+    post:
+      summary: "POST api/maintenance"
+      operationId: "createMaintenanceRequest"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMaintenanceRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+    get:
+      summary: "GET api/maintenance"
+      operationId: "getAllMaintenanceRequests"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+  /api/maintenance/{requestId}/assignments:
+    post:
+      summary: "POST api/maintenance/{requestId}/assignments"
+      operationId: "createAssignment"
+      parameters:
+        - name: "requestId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAssignmentDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
+  /api/maintenance/assignments/{assignmentId}:
+    delete:
+      summary: "DELETE api/maintenance/assignments/{assignmentId}"
+      operationId: "deleteAssignment"
+      parameters:
+        - name: "assignmentId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+components:
+  schemas:
+    ApartmentOwnershipId:
+      type: "object"
+      properties:
+        apartmentId:
+          type: "integer"
+          format: "int64"
+    Role:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        users:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
+    ResidentProfile:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/User"
+        emergencyContact:
+          type: "string"
+    FlatOwnerProfile:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/User"
+    StaffProfile:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/User"
+        specialization:
+          type: "string"
+        hireDate:
+          type: "string"
+          format: "date"
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        email:
+          type: "string"
+        phone:
+          type: "string"
+        passwordHash:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        roles:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Role"
+        residentProfile:
+          $ref: "#/components/schemas/ResidentProfile"
+        flatOwnerProfile:
+          $ref: "#/components/schemas/FlatOwnerProfile"
+        adminProfile:
+          $ref: "#/components/schemas/AdminProfile"
+        staffProfile:
+          $ref: "#/components/schemas/StaffProfile"
+    AdminProfile:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/User"
+        roleLevel:
+          type: "string"
+        apartmentOwnerships:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ApartmentOwnership"
+    ApartmentOwnership:
+      type: "object"
+      properties:
+        id:
+          $ref: "#/components/schemas/ApartmentOwnershipId"
+        adminProfile:
+          $ref: "#/components/schemas/AdminProfile"
+        apartment:
+          $ref: "#/components/schemas/Apartment"
+        startDate:
+          type: "string"
+          format: "date-time"
+        endDate:
+          type: "string"
+          format: "date-time"
+        isActive:
+          type: "boolean"
+    Apartment:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        buildingName:
+          type: "string"
+        unitNumber:
+          type: "string"
+        floor:
+          type: "integer"
+          format: "int32"
+        apartmentOwnerships:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ApartmentOwnership"
+        apartmentFlats:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Flat"
+    FlatOccupantId:
+      type: "object"
+      properties:
+        flatId:
+          type: "integer"
+          format: "int64"
+        residentUserId:
+          type: "integer"
+          format: "int64"
+    FlatOccupant:
+      type: "object"
+      properties:
+        id:
+          $ref: "#/components/schemas/FlatOccupantId"
+        flat:
+          $ref: "#/components/schemas/Flat"
+        resident:
+          $ref: "#/components/schemas/ResidentProfile"
+        leaseStartDate:
+          type: "string"
+          format: "date"
+        leaseEndDate:
+          type: "string"
+          format: "date"
+        isPrimary:
+          type: "boolean"
+    Flat:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        apartment:
+          $ref: "#/components/schemas/Apartment"
+        flatNumber:
+          type: "string"
+        floorNumber:
+          type: "integer"
+          format: "int32"
+        area:
+          type: "integer"
+          format: "int32"
+        numBedrooms:
+          type: "integer"
+          format: "int32"
+        numBathrooms:
+          type: "integer"
+          format: "int32"
+        owner:
+          $ref: "#/components/schemas/FlatOwnerProfile"
+        flatOccupants:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/FlatOccupant"
+        createdAt:
+          type: "string"
+          format: "date-time"
+    FlatCreateDTO:
+      type: "object"
+      properties:
+        apartmentId:
+          type: "integer"
+          format: "int64"
+        area:
+          type: "integer"
+          format: "int32"
+        flatNumber:
+          type: "string"
+        floorNumber:
+          type: "integer"
+          format: "int32"
+        numBathrooms:
+          type: "integer"
+          format: "int32"
+        numBedrooms:
+          type: "integer"
+          format: "int32"
+        ownerUserId:
+          type: "integer"
+          format: "int64"
+    Void:
+      type: "object"
+      properties: { }
+    ResidentProfileDTO:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/UserDTO"
+    FlatOwnerProfileDTO:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/UserDTO"
+    AdminProfileDTO:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/UserDTO"
+    StaffProfileDTO:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+          format: "int64"
+        user:
+          $ref: "#/components/schemas/UserDTO"
+    UserDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        email:
+          type: "string"
+        phone:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        roles:
+          type: "array"
+          items:
+            type: "string"
+        residentProfile:
+          $ref: "#/components/schemas/ResidentProfileDTO"
+        flatOwnerProfile:
+          $ref: "#/components/schemas/FlatOwnerProfileDTO"
+        adminProfile:
+          $ref: "#/components/schemas/AdminProfileDTO"
+        staffProfile:
+          $ref: "#/components/schemas/StaffProfileDTO"
+    ApartmentOwnershipDTO:
+      type: "object"
+      properties:
+        apartmentId:
+          type: "integer"
+          format: "int64"
+        adminUser:
+          $ref: "#/components/schemas/UserDTO"
+        startDate:
+          type: "string"
+          format: "date-time"
+        endDate:
+          type: "string"
+          format: "date-time"
+    FlatOccupantDTO:
+      type: "object"
+      properties:
+        flatId:
+          type: "integer"
+          format: "int64"
+        residentUserId:
+          type: "integer"
+          format: "int64"
+        flatDto:
+          $ref: "#/components/schemas/FlatDTO"
+        userDto:
+          $ref: "#/components/schemas/UserDTO"
+        leaseStartDate:
+          type: "string"
+          format: "date"
+        leaseEndDate:
+          type: "string"
+          format: "date"
+    FlatDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        apartment:
+          $ref: "#/components/schemas/ApartmentDTO"
+        apartmentId:
+          type: "integer"
+          format: "int64"
+        ownerUserId:
+          type: "integer"
+          format: "int64"
+        flatNumber:
+          type: "string"
+        floorNumber:
+          type: "integer"
+          format: "int32"
+        area:
+          type: "integer"
+          format: "int32"
+        numBedrooms:
+          type: "integer"
+          format: "int32"
+        numBathrooms:
+          type: "integer"
+          format: "int32"
+        owner:
+          $ref: "#/components/schemas/UserDTO"
+        flatOccupants:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/FlatOccupantDTO"
+    ApartmentDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        buildingName:
+          type: "string"
+        unitNumber:
+          type: "string"
+        floor:
+          type: "integer"
+          format: "int32"
+        ownerships:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ApartmentOwnershipDTO"
+        apartmentFlats:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/FlatDTO"
+    LoginRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+    UpdateMaintenanceRequestDTO:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+        status:
+          type: "string"
+    MaintenanceRequestAssignmentDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        requestId:
+          type: "integer"
+          format: "int64"
+        staffId:
+          type: "integer"
+          format: "int64"
+        assignedAt:
+          type: "string"
+          format: "date-time"
+        notes:
+          type: "string"
+    MaintenanceRequestDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        residentUserId:
+          type: "integer"
+          format: "int64"
+        flatId:
+          type: "integer"
+          format: "int64"
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+        status:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        completedAt:
+          type: "string"
+          format: "date-time"
+        assignments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
+    CreateMaintenanceRequestDTO:
+      type: "object"
+      properties:
+        residentUserId:
+          type: "integer"
+          format: "int64"
+        flatId:
+          type: "integer"
+          format: "int64"
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+    CreateAssignmentDTO:
+      type: "object"
+      properties:
+        staffId:
+          type: "integer"
+          format: "int64"
+        notes:
+          type: "string"
