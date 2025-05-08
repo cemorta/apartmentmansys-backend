@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import java.util.List;
 
 import java.util.Map;
 
@@ -58,6 +59,15 @@ public class MaintenanceRequestController {
     }
 
     /**
+     * Get maintenance requests by resident ID
+     */
+    @GetMapping("/by-resident/{residentId}")
+    public ResponseEntity<List<MaintenanceRequestDTO>> getRequestsByResident(@PathVariable Long residentId) {
+        List<MaintenanceRequestDTO> requests = maintenanceRequestService.getRequestsByResidentId(residentId);
+        return ResponseEntity.ok(requests);
+    }
+
+    /**
      * Get all maintenance requests with pagination
      */
     @GetMapping
@@ -96,14 +106,6 @@ public class MaintenanceRequestController {
         return ResponseEntity.noContent().build();
     }
 
-//    /**
-//     * Get maintenance requests by resident ID
-//     */
-//    @GetMapping("/by-resident/{residentId}")
-//    public ResponseEntity<List<MaintenanceRequestDTO>> getRequestsByResident(@PathVariable Long residentId) {
-//        List<MaintenanceRequestDTO> requests = maintenanceRequestService.getRequestsByResidentId(residentId);
-//        return ResponseEntity.ok(requests);
-//    }
 //
 //    /**
 //     * Get maintenance requests by flat ID

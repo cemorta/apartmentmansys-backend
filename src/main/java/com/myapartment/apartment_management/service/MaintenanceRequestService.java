@@ -94,17 +94,17 @@ public class MaintenanceRequestService {
                 .map(MaintenanceRequestDTO::new);
     }
 
-//    /**
-//     * Get maintenance requests by resident ID
-//     */
-//    @Transactional(readOnly = true)
-//    public List<MaintenanceRequestDTO> getRequestsByResidentId(Long residentId) {
-//        return requestRepository.findByResidentUserId(residentId)
-//                .stream()
-//                .map(MaintenanceRequestDTO::new)
-//                .collect(Collectors.toList());
-//    }
-//
+    /**
+     * Get maintenance requests by resident ID
+     */
+    @Transactional(readOnly = true)
+    public List<MaintenanceRequestDTO> getRequestsByResidentId(Long residentId) {
+        return requestRepository.findByResidentUserId(residentId)
+                .stream()
+                .map(MaintenanceRequestDTO::new)
+                .collect(Collectors.toList());
+    }
+
 //    /**
 //     * Get maintenance requests by flat ID
 //     */
