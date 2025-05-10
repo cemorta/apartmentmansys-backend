@@ -3,9 +3,9 @@ CREATE TABLE maintenance_requests (
     resident_user_id INT REFERENCES resident_profiles(user_id) ON DELETE CASCADE,
     flat_id INT REFERENCES flats(id) ON DELETE CASCADE,
     description TEXT NOT NULL,
-    category VARCHAR(30) CHECK (category IN ('plumbing', 'electrical', 'HVAC', 'appliance', 'general')),
-    priority VARCHAR(10) CHECK (priority IN ('low', 'medium', 'high')) DEFAULT 'medium',
-    status VARCHAR(15) CHECK (status IN ('pending', 'in_progress', 'completed', 'canceled')) DEFAULT 'pending',
+    category VARCHAR(30) CHECK (category IN ('PLUMBING', 'ELECTRICAL', 'HVAC', 'APPLIANCE', 'GENERAL')),
+    priority VARCHAR(10) CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH')) DEFAULT 'MEDIUM',
+    status VARCHAR(15) CHECK (status IN ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELED')) DEFAULT 'PENDING',
     created_at TIMESTAMP DEFAULT NOW(),
     completed_at TIMESTAMP
 );

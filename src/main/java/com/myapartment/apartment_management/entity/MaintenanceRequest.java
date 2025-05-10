@@ -45,11 +45,11 @@ public class MaintenanceRequest {
 
     // Enums
     public enum Category {
-        PLUMBING("plumbing"),
-        ELECTRICAL("electrical"),
+        PLUMBING("PLUMBING"),
+        ELECTRICAL("ELECTRICAL"),
         HVAC("HVAC"),
-        APPLIANCE("appliance"),
-        GENERAL("general");
+        APPLIANCE("APPLIANCE"),
+        GENERAL("GENERAL");
 
         private final String value;
 
@@ -63,9 +63,9 @@ public class MaintenanceRequest {
     }
 
     public enum Priority {
-        LOW("low"),
-        MEDIUM("medium"),
-        HIGH("high");
+        LOW("LOW"),
+        MEDIUM("MEDIUM"),
+        HIGH("HIGH");
 
         private final String value;
 
@@ -79,10 +79,10 @@ public class MaintenanceRequest {
     }
 
     public enum Status {
-        PENDING("pending"),
-        IN_PROGRESS("in_progress"),
-        COMPLETED("completed"),
-        CANCELED("canceled");
+        PENDING("PENDING"),
+        IN_PROGRESS("IN_PROGRESS"),
+        COMPLETED("COMPLETED"),
+        CANCELED("CANCELED");
 
         private final String value;
 

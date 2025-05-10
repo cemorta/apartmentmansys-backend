@@ -82,9 +82,9 @@ VALUES
 
 -- Insert staff profiles
 INSERT INTO staff_profiles (user_id, specialization, hire_date) VALUES
-(3, 'plumbing', '2023-12-01'), -- Michael Garcia
-(4, 'electrical', '2023-12-15'), -- Emily Williams
-(5, 'general', '2024-01-02'); -- David Brown
+(3, 'PLUMBING', '2023-12-01'), -- Michael Garcia
+(4, 'ELECTRICAL', '2023-12-15'), -- Emily Williams
+(5, 'GENERAL', '2024-01-02'); -- David Brown
 
 -- Insert flat owner profiles
 INSERT INTO flat_owner_profiles (user_id) VALUES
@@ -159,14 +159,14 @@ INSERT INTO apartment_payments (resident_user_id, admin_user_id, flat_id, amount
 
 -- Insert maintenance requests
 INSERT INTO maintenance_requests (resident_user_id, flat_id, description, category, priority, status, created_at, completed_at) VALUES
-(9, 1, 'Leaking faucet in kitchen', 'plumbing', 'medium', 'completed', '2024-02-05 09:00:00', '2024-02-06 14:30:00'),
-(10, 2, 'Power outlet not working in bedroom', 'electrical', 'high', 'completed', '2024-02-10 10:15:00', '2024-02-10 16:45:00'),
-(11, 3, 'Heating not working properly', 'HVAC', 'high', 'completed', '2024-02-15 11:30:00', '2024-02-17 10:20:00'),
-(12, 4, 'Dishwasher not draining', 'appliance', 'medium', 'completed', '2024-02-20 12:45:00', '2024-02-21 13:10:00'),
-(13, 5, 'Ceiling light flickering', 'electrical', 'low', 'in_progress', '2024-02-25 14:00:00', NULL),
-(14, 6, 'Bathroom door handle loose', 'general', 'low', 'pending', '2024-03-01 15:15:00', NULL),
-(9, 1, 'Garbage disposal not working', 'appliance', 'medium', 'in_progress', '2024-03-05 16:30:00', NULL),
-(10, 2, 'Window won''t close properly', 'general', 'medium', 'pending', '2024-03-10 17:45:00', NULL);
+(9, 1, 'Leaking faucet in kitchen', 'PLUMBING', 'MEDIUM', 'COMPLETED', '2024-02-05 09:00:00', '2024-02-06 14:30:00'),
+(10, 2, 'Power outlet not working in bedroom', 'ELECTRICAL', 'HIGH', 'COMPLETED', '2024-02-10 10:15:00', '2024-02-10 16:45:00'),
+(11, 3, 'Heating not working properly', 'HVAC', 'HIGH', 'COMPLETED', '2024-02-15 11:30:00', '2024-02-17 10:20:00'),
+(12, 4, 'Dishwasher not draining', 'APPLIANCE', 'MEDIUM', 'COMPLETED', '2024-02-20 12:45:00', '2024-02-21 13:10:00'),
+(13, 5, 'Ceiling light flickering', 'ELECTRICAL', 'LOW', 'IN_PROGRESS', '2024-02-25 14:00:00', NULL),
+(14, 6, 'Bathroom door handle loose', 'GENERAL', 'LOW', 'PENDING', '2024-03-01 15:15:00', NULL),
+(9, 1, 'Garbage disposal not working', 'APPLIANCE', 'MEDIUM', 'IN_PROGRESS', '2024-03-05 16:30:00', NULL),
+(10, 2, 'Window won''t close properly', 'GENERAL', 'MEDIUM', 'PENDING', '2024-03-10 17:45:00', NULL);
 
 -- Insert maintenance request assignments
 INSERT INTO maintenance_request_assignments (request_id, staff_id, assigned_at, notes) VALUES

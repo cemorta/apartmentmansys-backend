@@ -19,13 +19,13 @@ public class CreateMaintenanceRequestDTO {
     @NotBlank(message = "Description is required")
     private String description;
 
-    @Pattern(regexp = "plumbing|electrical|HVAC|appliance|general",
+    @Pattern(regexp = "PLUMBING|ELECTRICAL|HVAC|APPLIANCE|GENERAL",
             message = "Category must be one of: plumbing, electrical, HVAC, appliance, general")
     private String category;
 
-    @Pattern(regexp = "low|medium|high",
-            message = "Priority must be one of: low, medium, high")
-    private String priority = "medium";
+    @Pattern(regexp = "LOW|MEDIUM|HIGH",
+            message = "Priority must be one of: LOW, MEDIUM, HIGH")
+    private String priority = "MEDIUM";
 
     // Constructors
     public CreateMaintenanceRequestDTO() {

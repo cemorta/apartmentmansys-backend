@@ -26,7 +26,7 @@ CREATE TABLE admin_profiles (
 -- Staff-specific information
 CREATE TABLE staff_profiles (
     user_id INT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    specialization TEXT CHECK (specialization IN ('plumbing', 'electrical', 'general', 'HVAC')),
+    specialization TEXT CHECK (specialization IN ('PLUMBING', 'ELECTRICAL', 'GENERAL', 'HVAC')),
     hire_date DATE NOT NULL
 );
 

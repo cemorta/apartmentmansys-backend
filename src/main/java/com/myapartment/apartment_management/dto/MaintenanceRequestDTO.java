@@ -34,7 +34,7 @@ public class MaintenanceRequestDTO {
         this.description = createDTO.getDescription();
         this.category = createDTO.getCategory();
         this.priority = createDTO.getPriority();
-        this.status = "pending"; // Default status for new requests
+        this.status = "PENDING"; // Default status for new requests
     }
 
     public MaintenanceRequestDTO(MaintenanceRequest entity) {
@@ -138,7 +138,7 @@ public class MaintenanceRequestDTO {
         dto.setDescription(createDTO.getDescription());
         dto.setCategory(createDTO.getCategory());
         dto.setPriority(createDTO.getPriority());
-        dto.setStatus("pending"); // Default status for new requests
+        dto.setStatus("PENDING"); // Default status for new requests
         return dto;
     }
 

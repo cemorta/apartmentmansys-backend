@@ -9,16 +9,16 @@ public class UpdateMaintenanceRequestDTO {
 
     private String description;
 
-    @Pattern(regexp = "plumbing|electrical|HVAC|appliance|general",
-            message = "Category must be one of: plumbing, electrical, HVAC, appliance, general")
+    @Pattern(regexp = "PLUMBING|ELECTRICAL|HVAC|APPLIANCE|GENERAL",
+            message = "Category must be one of: PLUMBING, ELECTRICAL, HVAC, APPLIANCE, GENERAL")
     private String category;
 
-    @Pattern(regexp = "low|medium|high",
-            message = "Priority must be one of: low, medium, high")
+    @Pattern(regexp = "LOW|MEDIUM|HIGH",
+            message = "Priority must be one of: LOW, MEDIUM, HIGH")
     private String priority;
 
-    @Pattern(regexp = "pending|in_progress|completed|canceled",
-            message = "Status must be one of: pending, in_progress, completed, canceled")
+    @Pattern(regexp = "PENDING|IN_PROGRESS|COMPLETED|CANCELED",
+            message = "Status must be one of: PENDING, IN_PROGRESS, COMPLETED, CANCELED")
     private String status;
 
     // Constructors
