@@ -6,6 +6,8 @@ import com.myapartment.apartment_management.entity.MaintenanceRequestAssignment;
 import com.myapartment.apartment_management.repository.MaintenanceRequestAssignmentRepository;
 import com.myapartment.apartment_management.repository.MaintenanceRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -164,6 +168,62 @@ public class MaintenanceRequestService {
                 .stream()
                 .map(MaintenanceRequestDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Get maintenance requests that assigned to the staff
+     */
+    @Transactional(readOnly = true)
+    public Page<MaintenanceRequestAssignmentDTO> getRequestsByStaffUserId(Long staffUserId, String search, String category, String status, Pageable pageable) {
+        // Create specification to build dynamic query
+        Specification<MaintenanceRequestAssignment> spec = Specification.where(null);
+
+        // Add staff ID filter - this needs to be assigned, not chained with .and()
+        spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("staffId"), staffUserId));
+
+        // Add search criteria if provided
+        if (search != null && !search.trim().isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                String searchLike = "%" + search.toLowerCase() + "%";
+                return criteriaBuilder.or(
+                        criteriaBuilder.like(criteriaBuilder.lower(root.join("maintenanceRequest").get("description")), searchLike)
+                        // If you have a resident name field or join to a resident entity, add it here
+                        // For example:
+                        // criteriaBuilder.like(criteriaBuilder.lower(root.join("resident").get("name")), searchLike)
+                );
+            });
+        }
+
+        // Filter by category if provided
+        if (category != null && !category.trim().isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                try {
+                    MaintenanceRequest.Category categoryEnum = MaintenanceRequest.Category.valueOf(category);
+                    return criteriaBuilder.equal(root.join("maintenanceRequest").get("category"), categoryEnum);
+                } catch (IllegalArgumentException e) {
+                    // Invalid category, ignore this filter
+                    return criteriaBuilder.conjunction();
+                }
+            });
+        }
+
+        // Filter by status if provided
+        if (status != null && !status.trim().isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                try {
+                    MaintenanceRequest.Status statusEnum = MaintenanceRequest.Status.valueOf(status);
+                    return criteriaBuilder.equal(root.join("maintenanceRequest").get("status"), statusEnum);
+                } catch (IllegalArgumentException e) {
+                    // Invalid status, ignore this filter
+                    return criteriaBuilder.conjunction();
+                }
+            });
+        }
+
+        // Execute the query with the specification and pageable
+        return assignmentRepository.findAll(spec, pageable)
+                .map(entity -> new MaintenanceRequestAssignmentDTO(entity, true));
     }
 
 //    /**

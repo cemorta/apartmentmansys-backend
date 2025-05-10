@@ -9,6 +9,7 @@ public class MaintenanceRequestAssignmentDTO {
 
     private Long id;
     private Long requestId;
+    private MaintenanceRequestDTO maintenanceRequest;
     private Long staffId;
     private LocalDateTime assignedAt;
     private String notes;
@@ -23,6 +24,17 @@ public class MaintenanceRequestAssignmentDTO {
         this.staffId = entity.getStaffId();
         this.assignedAt = entity.getAssignedAt();
         this.notes = entity.getNotes();
+    }
+
+    public MaintenanceRequestAssignmentDTO(MaintenanceRequestAssignment entity, boolean includeMaintenanceRequest) {
+        this.id = entity.getId();
+        this.requestId = entity.getMaintenanceRequest() != null ? entity.getMaintenanceRequest().getId() : null;
+        this.staffId = entity.getStaffId();
+        this.assignedAt = entity.getAssignedAt();
+        this.notes = entity.getNotes();
+        if (includeMaintenanceRequest && entity.getMaintenanceRequest() != null) {
+            this.maintenanceRequest = new MaintenanceRequestDTO(entity.getMaintenanceRequest(), false);
+        }
     }
 
     // Create new entity method (requires MaintenanceRequest to be passed in)
@@ -97,6 +109,14 @@ public class MaintenanceRequestAssignmentDTO {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public MaintenanceRequestDTO getMaintenanceRequest() {
+        return maintenanceRequest;
+    }
+
+    public void setMaintenanceRequest(MaintenanceRequestDTO maintenanceRequest) {
+        this.maintenanceRequest = maintenanceRequest;
     }
 
     @Override

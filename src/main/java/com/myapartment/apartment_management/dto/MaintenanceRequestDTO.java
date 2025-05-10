@@ -55,6 +55,24 @@ public class MaintenanceRequestDTO {
         }
     }
 
+    public MaintenanceRequestDTO(MaintenanceRequest entity, boolean includeAssignments) {
+        this.id = entity.getId();
+        this.residentUserId = entity.getResidentUserId();
+        this.flatId = entity.getFlatId();
+        this.description = entity.getDescription();
+        this.category = entity.getCategory() != null ? entity.getCategory().getValue() : null;
+        this.priority = entity.getPriority() != null ? entity.getPriority().getValue() : null;
+        this.status = entity.getStatus() != null ? entity.getStatus().getValue() : null;
+        this.createdAt = entity.getCreatedAt();
+        this.completedAt = entity.getCompletedAt();
+
+        if (includeAssignments && entity.getAssignments() != null) {
+            this.assignments = entity.getAssignments().stream()
+                    .map(assignment -> new MaintenanceRequestAssignmentDTO(assignment))
+                    .collect(Collectors.toSet());
+        }
+    }
+
     // For creating a new maintenance request
     public MaintenanceRequest toEntity() {
         MaintenanceRequest entity = new MaintenanceRequest();

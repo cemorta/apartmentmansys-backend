@@ -1,7 +1,6 @@
 package com.myapartment.apartment_management.controller;
 
 import com.myapartment.apartment_management.dto.*;
-import com.myapartment.apartment_management.entity.MaintenanceRequest;
 import com.myapartment.apartment_management.repository.MaintenanceRequestRepository;
 import com.myapartment.apartment_management.service.MaintenanceRequestService;
 import org.springframework.data.domain.Page;
@@ -12,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Map;
@@ -66,6 +67,26 @@ public class MaintenanceRequestController {
     @GetMapping("/by-resident/{residentId}")
     public ResponseEntity<List<MaintenanceRequestDTO>> getRequestsByResident(@PathVariable Long residentId) {
         List<MaintenanceRequestDTO> requests = maintenanceRequestService.getRequestsByResidentId(residentId);
+        return ResponseEntity.ok(requests);
+    }
+
+    /**
+     * Get maintenance requests that assigned to the staff
+     */
+    @GetMapping("/by-staff/{staffUserId}")
+    public ResponseEntity<Page<MaintenanceRequestAssignmentDTO>> getRequestsByStaff(@PathVariable Long staffUserId,
+                                                                                    @RequestParam(required = false) String search,
+                                                                                    @RequestParam(required = false) String category,
+                                                                                    @RequestParam(required = false) List<String> sort,
+                                                                                    @RequestParam(required = false) String status,
+                                                                                    @RequestParam(defaultValue = "0") int page,
+                                                                                    @RequestParam(defaultValue = "10") int size) {
+//        // Create sort specification from the provided sort parameters
+//        Sort sortSpec = createSortSpecification(sort);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        Page<MaintenanceRequestAssignmentDTO> requests = maintenanceRequestService.getRequestsByStaffUserId(staffUserId, search, category, status, pageable);
         return ResponseEntity.ok(requests);
     }
 
