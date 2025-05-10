@@ -4,8 +4,190 @@ info:
   description: "apartmentmansys_backend API"
   version: "1.0.0"
 servers:
-  - url: "https://apartmentmansys_backend"
+  - url: "https://localhost:8081"
 paths:
+  /api/maintenance/{id}:
+    put:
+      summary: "PUT api/maintenance/{id}"
+      operationId: "updateMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMaintenanceRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+    delete:
+      summary: "DELETE api/maintenance/{id}"
+      operationId: "deleteMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+    get:
+      summary: "GET api/maintenance/{id}"
+      operationId: "getMaintenanceRequest"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+  /api/maintenance:
+    post:
+      summary: "POST api/maintenance"
+      operationId: "createMaintenanceRequest"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMaintenanceRequestDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+    get:
+      summary: "GET api/maintenance"
+      operationId: "getAllMaintenanceRequests"
+      parameters:
+        - name: "search"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "category"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "priority"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "status"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+        - name: "page"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "0"
+        - name: "size"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+            default: "10"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestDTO"
+  /api/maintenance/{requestId}/assignments:
+    post:
+      summary: "POST api/maintenance/{requestId}/assignments"
+      operationId: "createAssignment"
+      parameters:
+        - name: "requestId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAssignmentDTO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
+  /api/maintenance/assignments/{assignmentId}:
+    delete:
+      summary: "DELETE api/maintenance/assignments/{assignmentId}"
+      operationId: "deleteAssignment"
+      parameters:
+        - name: "assignmentId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Void"
+  /api/maintenance/by-resident/{residentId}:
+    get:
+      summary: "GET api/maintenance/by-resident/{residentId}"
+      operationId: "getRequestsByResident"
+      parameters:
+        - name: "residentId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MaintenanceRequestDTO"
   /api/flats/{id}:
     put:
       summary: "PUT api/flats/{id}"
@@ -269,135 +451,92 @@ paths:
             '*/*':
               schema:
                 type: "object"
-  /api/maintenance/{id}:
-    put:
-      summary: "PUT api/maintenance/{id}"
-      operationId: "updateMaintenanceRequest"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateMaintenanceRequestDTO"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/MaintenanceRequestDTO"
-    delete:
-      summary: "DELETE api/maintenance/{id}"
-      operationId: "deleteMaintenanceRequest"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Void"
-    get:
-      summary: "GET api/maintenance/{id}"
-      operationId: "getMaintenanceRequest"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/MaintenanceRequestDTO"
-  /api/maintenance:
-    post:
-      summary: "POST api/maintenance"
-      operationId: "createMaintenanceRequest"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateMaintenanceRequestDTO"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/MaintenanceRequestDTO"
-    get:
-      summary: "GET api/maintenance"
-      operationId: "getAllMaintenanceRequests"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/MaintenanceRequestDTO"
-  /api/maintenance/{requestId}/assignments:
-    post:
-      summary: "POST api/maintenance/{requestId}/assignments"
-      operationId: "createAssignment"
-      parameters:
-        - name: "requestId"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateAssignmentDTO"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
-  /api/maintenance/assignments/{assignmentId}:
-    delete:
-      summary: "DELETE api/maintenance/assignments/{assignmentId}"
-      operationId: "deleteAssignment"
-      parameters:
-        - name: "assignmentId"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int64"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Void"
 components:
   schemas:
+    UpdateMaintenanceRequestDTO:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+        status:
+          type: "string"
+    MaintenanceRequestAssignmentDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        requestId:
+          type: "integer"
+          format: "int64"
+        staffId:
+          type: "integer"
+          format: "int64"
+        assignedAt:
+          type: "string"
+          format: "date-time"
+        notes:
+          type: "string"
+    MaintenanceRequestDTO:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        residentUserId:
+          type: "integer"
+          format: "int64"
+        flatId:
+          type: "integer"
+          format: "int64"
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+        status:
+          type: "string"
+        createdAt:
+          type: "string"
+          format: "date-time"
+        completedAt:
+          type: "string"
+          format: "date-time"
+        assignments:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
+    CreateMaintenanceRequestDTO:
+      type: "object"
+      properties:
+        residentUserId:
+          type: "integer"
+          format: "int64"
+        flatId:
+          type: "integer"
+          format: "int64"
+        description:
+          type: "string"
+        category:
+          type: "string"
+        priority:
+          type: "string"
+    CreateAssignmentDTO:
+      type: "object"
+      properties:
+        staffId:
+          type: "integer"
+          format: "int64"
+        notes:
+          type: "string"
+    Void:
+      type: "object"
+      properties: { }
     ApartmentOwnershipId:
       type: "object"
       properties:
@@ -610,9 +749,6 @@ components:
         ownerUserId:
           type: "integer"
           format: "int64"
-    Void:
-      type: "object"
-      properties: { }
     ResidentProfileDTO:
       type: "object"
       properties:
@@ -768,85 +904,4 @@ components:
         email:
           type: "string"
         password:
-          type: "string"
-    UpdateMaintenanceRequestDTO:
-      type: "object"
-      properties:
-        description:
-          type: "string"
-        category:
-          type: "string"
-        priority:
-          type: "string"
-        status:
-          type: "string"
-    MaintenanceRequestAssignmentDTO:
-      type: "object"
-      properties:
-        id:
-          type: "integer"
-          format: "int64"
-        requestId:
-          type: "integer"
-          format: "int64"
-        staffId:
-          type: "integer"
-          format: "int64"
-        assignedAt:
-          type: "string"
-          format: "date-time"
-        notes:
-          type: "string"
-    MaintenanceRequestDTO:
-      type: "object"
-      properties:
-        id:
-          type: "integer"
-          format: "int64"
-        residentUserId:
-          type: "integer"
-          format: "int64"
-        flatId:
-          type: "integer"
-          format: "int64"
-        description:
-          type: "string"
-        category:
-          type: "string"
-        priority:
-          type: "string"
-        status:
-          type: "string"
-        createdAt:
-          type: "string"
-          format: "date-time"
-        completedAt:
-          type: "string"
-          format: "date-time"
-        assignments:
-          type: "array"
-          items:
-            $ref: "#/components/schemas/MaintenanceRequestAssignmentDTO"
-    CreateMaintenanceRequestDTO:
-      type: "object"
-      properties:
-        residentUserId:
-          type: "integer"
-          format: "int64"
-        flatId:
-          type: "integer"
-          format: "int64"
-        description:
-          type: "string"
-        category:
-          type: "string"
-        priority:
-          type: "string"
-    CreateAssignmentDTO:
-      type: "object"
-      properties:
-        staffId:
-          type: "integer"
-          format: "int64"
-        notes:
           type: "string"
