@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,14 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
+
+    public List<User> findAllByStaffExists() {
+        Specification<User> spec = Specification.where((root, query, criteriaBuilder) ->
+                criteriaBuilder.isNotNull(root.get("staffProfile"))
+        );
+
+        return userRepository.findAll(spec);
     }
 
     public Page<User> getFilteredUsers(String search, String profile, String role, Pageable pageable) {

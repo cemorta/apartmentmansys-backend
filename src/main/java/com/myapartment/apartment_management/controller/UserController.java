@@ -29,6 +29,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/staff")
+    public List<UserDTO> getAllStaff() {
+        return StreamSupport.stream(userService.findAllByStaffExists().spliterator(), false)
+                .map(user -> new UserDTO(user, true))
+                .collect(Collectors.toList());
+    }
+
     @GetMapping
     public List<UserDTO> getAllUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
