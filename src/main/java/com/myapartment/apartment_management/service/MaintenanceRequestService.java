@@ -25,13 +25,16 @@ public class MaintenanceRequestService {
 
     private final MaintenanceRequestRepository requestRepository;
     private final MaintenanceRequestAssignmentRepository assignmentRepository;
+    private final NotificationService notificationService;
 
     @Autowired
     public MaintenanceRequestService(
             MaintenanceRequestRepository requestRepository,
-            MaintenanceRequestAssignmentRepository assignmentRepository) {
+            MaintenanceRequestAssignmentRepository assignmentRepository,
+            NotificationService notificationService) {
         this.requestRepository = requestRepository;
         this.assignmentRepository = assignmentRepository;
+        this.notificationService = notificationService;
     }
 
     /**
@@ -48,6 +51,14 @@ public class MaintenanceRequestService {
 
         // Save to database
         MaintenanceRequest savedRequest = requestRepository.save(newRequest);
+        MaintenanceRequestDTO responseDTO = new MaintenanceRequestDTO(savedRequest);
+
+        // Notify n8n via webhook
+        try {
+            notificationService.sendToN8nWebhook(responseDTO);
+        } catch (Exception e) {
+            System.err.println("Failed to notify n8n: " + e.getMessage());
+        }
 
         // Convert back to DTO for response
         return new MaintenanceRequestDTO(savedRequest);
