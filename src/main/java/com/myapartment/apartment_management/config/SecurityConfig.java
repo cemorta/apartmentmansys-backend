@@ -46,6 +46,7 @@ public class SecurityConfig {
                 // actual POST is allowed. If your Spring Security setup doesn't allow
                 // OPTIONS requests, the browser never proceeds to the real POST.
                 .requestMatchers("/api/auth/**", "/api/public/**").permitAll()
+                .requestMatchers("/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
