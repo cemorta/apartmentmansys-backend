@@ -37,6 +37,16 @@ public class DuePaymentController {
     }
 
     /**
+     * Get all due payments for a specific user
+     */
+    @GetMapping("/user/{userId}")
+    public List<DuePaymentDTO> getDuePaymentsByUserId(@PathVariable Long userId) {
+        return StreamSupport.stream(duePaymentService.getDuePaymentsByUserId(userId).spliterator(), false)
+                .map(duePayment -> new DuePaymentDTO(duePayment, true, true))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Get all due payments for a specific flat
      */
     @GetMapping("/flat/{flatId}")

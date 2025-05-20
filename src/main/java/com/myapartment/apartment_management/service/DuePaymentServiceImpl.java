@@ -1,9 +1,13 @@
 package com.myapartment.apartment_management.service;
 
 import com.myapartment.apartment_management.entity.DuePayment;
+import com.myapartment.apartment_management.entity.Flat;
+import com.myapartment.apartment_management.entity.FlatOwnership;
 import com.myapartment.apartment_management.repository.DuePaymentRepository;
+import com.myapartment.apartment_management.repository.FlatOwnershipRepository;
 import com.myapartment.apartment_management.service.DuePaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +19,12 @@ import java.util.Optional;
 public class DuePaymentServiceImpl implements DuePaymentService {
 
     private final DuePaymentRepository duePaymentRepository;
+    private final FlatOwnershipRepository flatOwnershipRepository;
 
     @Autowired
-    public DuePaymentServiceImpl(DuePaymentRepository duePaymentRepository) {
+    public DuePaymentServiceImpl(DuePaymentRepository duePaymentRepository, FlatOwnershipRepository flatOwnershipRepository) {
         this.duePaymentRepository = duePaymentRepository;
+        this.flatOwnershipRepository = flatOwnershipRepository;
     }
 
     @Override
@@ -40,6 +46,21 @@ public class DuePaymentServiceImpl implements DuePaymentService {
     @Override
     public List<DuePayment> getDuePaymentsByFlatId(Long flatId) {
         return duePaymentRepository.findByFlatId(flatId);
+    }
+
+    @Override
+    public List<DuePayment> getDuePaymentsByUserId(Long userId) {
+        List<FlatOwnership> flatOwnerships = flatOwnershipRepository.findFlatOwnershipsByOwner_User_Id(userId);
+
+        List<Flat> flats = flatOwnerships.stream()
+                .map(FlatOwnership::getFlat)
+                .toList();
+
+        Specification<DuePayment> spec = Specification.where((root, query, criteriaBuilder) ->
+                root.get("flat").in(flats)
+        );
+
+        return duePaymentRepository.findAll(spec);
     }
 
     @Override

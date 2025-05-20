@@ -21,7 +21,7 @@ public class DuePaymentDTO {
 
         this.paidAt = duePayment.getPaidAt();
         if (duePayment.getFlat() != null && includeFlat) {
-            this.flat = new FlatDTO(duePayment.getFlat(), false, false, false);
+            this.flat = new FlatDTO(duePayment.getFlat(), false, true, false);
         }
         if (duePayment.getDue() != null && includeDue) {
             this.due = DueDTO.fromEntity(duePayment.getDue());

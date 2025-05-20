@@ -23,6 +23,14 @@ public interface DuePaymentService {
     List<DuePayment> getDuePaymentsByFlatId(Long flatId);
 
     /**
+     * Get all due payments for a specific user
+     *
+     * @param userId The ID of the user
+     * @return List of due payments for the user
+     */
+    List<DuePayment> getDuePaymentsByUserId(Long userId);
+
+    /**
      * Get a specific due payment by ID
      *
      * @param duePaymentId The ID of the due payment
