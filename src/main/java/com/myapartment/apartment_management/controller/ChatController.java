@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.myapartment.apartment_management.dto.MessageDTO;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,13 +23,15 @@ public class ChatController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMessageToBot(@RequestBody String userMessage) {
+    public ResponseEntity<String> sendMessageToBot(@RequestBody MessageDTO userMessage) {
         // n8n webhook URL
-        String webhookUrl = "http://localhost:5678/webhook/send-to-ai";
+        String webhookUrl = "http://localhost:5678/webhook-test/send-to-ai";
 
         // Prepare request body
         Map<String, String> request = new HashMap<>();
-        request.put("message", userMessage);
+        request.put("message", userMessage.getMessage());
+        request.put("userId", userMessage.getUserId().toString());
+
 
         // Send to n8n and wait for response
         ResponseEntity<String> aiResponse = restTemplate.postForEntity(webhookUrl, request, String.class);

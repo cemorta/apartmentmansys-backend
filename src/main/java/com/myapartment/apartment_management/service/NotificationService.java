@@ -16,7 +16,7 @@ public class NotificationService {
 
         HttpEntity<MaintenanceRequestDTO> request = new HttpEntity<>(dto, headers);
 
-        String n8nWebhookUrl = "http://localhost:5678/webhook-test/maintenance-created";
+        String n8nWebhookUrl = "http://localhost:5678/webhook/maintenance-created";
 
         restTemplate.postForEntity(n8nWebhookUrl, request, String.class);
     }
